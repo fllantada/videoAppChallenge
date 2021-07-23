@@ -33,7 +33,7 @@ En este proyecto, bosquejaras un sitio con el concepto base de Youtube, la funci
   - En caso de que haya muchos videos empatados en la popularidad mayor, escogerlos de forma random.
   - Considera que el sitio está creciendo rápidamente asi que debe ser una solución escalable
 
-3. En esta url (/popular) debe existir la opción para iniciar sesion. Manejar el proceso de login y logout.
+3. En esta url (/popular) debe existir la opción para iniciar sesion. Manejar el proceso de login y logout. Crea las colecciones y operaciones de backend que sean necesarias para habilitar el checkeo correspondiente de sesion.
 
 4. Implementar la navegación a los videos individuales. En esta url (/video/:id), se debe permitir al usuario logueado:
   - Dar like o dislike
@@ -42,7 +42,7 @@ En este proyecto, bosquejaras un sitio con el concepto base de Youtube, la funci
 # Formato de Entrega
 
 Después de haberte dado el acceso a este repositorio, deberás crear una rama con el formato *'/interview/<tu_apellido>'*, aquí deberás ir agregando tus commits, no hagas PR's al branch principal. 
-Tienes 7 dias a partir de tener el acceso a este repositorio para ir agregando tus cambios.
+Tienes 7 dias a partir de tener el acceso a este repositorio para ir agregando tus cambios. El progreso se validara diario, asegurate de darle push a tus cambios frecuentemente.
 
 # Clarificaciones
 
@@ -52,7 +52,7 @@ Tienes 7 dias a partir de tener el acceso a este repositorio para ir agregando t
 - Puedes utilizar cualquier tecnología para implementar el front de este ejercicio.
 - El foco de este ejercicio es en el backend, el front puede estar limitado solo a las operaciones mencionadas, y no revisaremos el diseño.
 - Puntos extra si puedes implementar y correr tu solución configurando docker y docker compose.
-- En la última sección de este README agrega las notas que creas necesarias para que podamos ejecutar tu solución.
+- En la última sección de este README agrega las notas que creas necesarias para que podamos ejecutar tu solución. Haz esto lo mas pronto posible en el tiempo que dedicaras a resolver este ejercicio.
 
 # Tus notas para la ejecución...
 
