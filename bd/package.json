@@ -1,0 +1,16 @@
+{
+  "name": "bd",
+  "version": "1.0.0",
+  "description": "Db",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "./initialize.sh && node script/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "mongodb": "^4.13.0"
+  }
+}

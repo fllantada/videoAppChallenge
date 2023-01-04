@@ -1,0 +1,12 @@
+{
+  "_id": "59d7a89e91e3c81400ee78ee",
+  "title": "Titulo del Video",
+  "author": "Autor 1",
+  "views": 0,
+  "youtube_id": "6EOLGg-JkhM",
+  "thumbnail_url": "https://picsum.photos/200/300",
+  "slug": "",
+  "active": true,
+  "created_date": "2021-10-01T05:00:00.000Z",
+  "popularity": 100
+}
