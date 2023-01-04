@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "./initialize.sh && node script/index.js"
+    "initialize": "./initialize.sh && node script/index.js",
+    "start": "docker start db_videos_container",
+    "stop": "docker stop db_videos_container"
   },
   "author": "",
   "license": "ISC",

@@ -7,7 +7,7 @@ fi
 docker stop db_videos_container
 docker rm db_videos_container
 docker rmi db_videos_image
-echo "Termine el stop.sh"
+echo "End el stop.sh"
 
 # Construye la imagen de Docker
 docker build -t db_videos_image .
