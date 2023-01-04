@@ -1,0 +1,12 @@
+extends ../layout/home.pug
+block content
+    div(class='row')
+        div(class='col-12')
+            h1(class='text-center') Popular route
+    div(class='row')
+        div(class='col-12')
+            ul 
+                each item in data 
+                    li= item.id 
+                    li= item.title
+                    li= item.description
