@@ -5,8 +5,6 @@ export default class PopularVideosApp {
   //Si bien puede verse muy redundante todo esto lo hago pensando en la consigna de
   //algo escalable
 
-  //logica para no buscar videos si ya tengo los videos populares
-
   private popularVideos: Video[] = [];
 
   constructor(private videoRepository: VideoRepository) {
@@ -14,7 +12,14 @@ export default class PopularVideosApp {
   }
 
   async updatePopularVideos(): Promise<void> {
-    this.popularVideos = await this.videoRepository.getPopularVideos(5);
+    try {
+      this.popularVideos = await this.videoRepository.getPopularVideos(5); //traigo 6 y
+      //me quedo con los 5 mas populares si se cummple que tienen misma popularidad pido el siguiente
+
+      //sort by popularity
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async getVideo(id: string): Promise<Video> {

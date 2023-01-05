@@ -1,5 +1,6 @@
 import { Router } from "express";
 import viewsRouter from "./views.routes";
+import videoRouter from "./video.routes";
 
 import { Request, Response } from "express";
 
@@ -16,6 +17,8 @@ mainRouter.use("/api", (req: Request, res: Response, next) => {
   next();
 });
 
-mainRouter.use("/", viewsRouter);
+mainRouter.use("/api", videoRouter);
+
+mainRouter.use("/api/videos", videoRouter);
 
 export default mainRouter;

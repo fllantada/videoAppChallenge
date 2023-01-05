@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export default {
+const config = {
   port: process.env.PORT || 3000,
   jwtSecret: process.env.JWT_SECRET || "mysecret",
   sessionConfig: {
@@ -15,4 +15,10 @@ export default {
     },
     userId: null,
   },
+  mongoConfig: {
+    url: process.env.MONGO_URL || "mongodb://localhost:27017",
+    dbName: process.env.MONGO_DB_NAME || "videoApp",
+  },
 };
+
+export default config;

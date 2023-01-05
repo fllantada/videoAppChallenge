@@ -4,7 +4,7 @@ import mainRouter from "../routes";
 import path from "path";
 import { createServer } from "http";
 import session from "express-session";
-import config from "../../config/config";
+import config from "../config/config";
 import passport from "passport";
 
 const app: Express = express();
