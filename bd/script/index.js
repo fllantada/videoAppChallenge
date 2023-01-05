@@ -18,7 +18,7 @@ export async function connectMongo() {
     const client = await MongoClient.connect(url, { useNewUrlParser: true });
     console.log("Connected to MongoDB");
 
-    const db = client.db("videos");
+    const db = client.db("videoApp");
     return db;
   } catch (error) {
     console.error(error);
