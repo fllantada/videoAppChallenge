@@ -8,7 +8,7 @@ export class PopularVideosApp {
   private popularVideos: Video[] = [];
 
   constructor(private videoRepository: VideoRepository) {
-    //this.updatePopularVideos();
+    this.updatePopularVideos();
     console.log("At video app");
   }
 

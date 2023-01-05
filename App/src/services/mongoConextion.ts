@@ -1,15 +1,12 @@
 import mongoose from "mongoose";
 import config from "../config/config";
 
-const mongoConnection = async () => {
+export default async function conectToMongo() {
   try {
-    await mongoose.connect(config.mongoConfig.url, {
-      dbName: config.mongoConfig.dbName,
-    });
-    console.log("Connected to mongo");
+    mongoose.set("strictQuery", false);
+    await mongoose.connect(config.mongoConfig.url);
+    console.log("Conected to mongo", config.mongoConfig.url);
   } catch (err) {
     console.log(err);
   }
-};
-
-export default mongoConnection;
+}
