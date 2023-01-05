@@ -6,22 +6,24 @@ export default class PopularVideosApp {
   //algo escalable
 
   //logica para no buscar videos si ya tengo los videos populares
-  videos: Video[] = [];
 
   private popularVideos: Video[] = [];
 
-  constructor(private videoRepository: VideoRepository) {}
+  constructor(private videoRepository: VideoRepository) {
+    this.updatePopularVideos();
+  }
 
-  async getPopularVideos(): Promise<Video[]> {
-    if (this.popularVideos.length > 0) {
-      this.popularVideos = await this.videoRepository.getPopularVideos(5);
-    }
-    return this.popularVideos;
+  async updatePopularVideos(): Promise<void> {
+    this.popularVideos = await this.videoRepository.getPopularVideos(5);
   }
 
   async getVideo(id: string): Promise<Video> {
-    const video = await this.videoRepository.getVideo(id);
-    return video;
+    //first try local
+    const video = this.popularVideos.find((video) => video._id === id);
+    if (video) return video;
+
+    //go find to DB
+    return await this.videoRepository.getVideo(id);
   }
 
   async editLike(id: string, action: "like" | "dislike"): Promise<Video> {
@@ -36,6 +38,7 @@ export default class PopularVideosApp {
       id,
       newPopularity
     );
+    this.updatePopularVideos();
     return editedVideo;
   }
 }
