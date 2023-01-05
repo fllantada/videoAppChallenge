@@ -28,13 +28,9 @@ export default class PopularVideosApp {
     const video = await this.getVideo(id);
     let newPopularity = video.popularity;
 
-    if (action === "dislike") {
-      newPopularity = video.popularity - 1;
-    }
+    if (action === "dislike") newPopularity = video.popularity - 5;
 
-    if (action === "like") {
-      newPopularity = video.popularity + 1;
-    }
+    if (action === "like") newPopularity = video.popularity + 10;
 
     const editedVideo = await this.videoRepository.editPopularity(
       id,
