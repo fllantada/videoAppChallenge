@@ -1,14 +1,15 @@
 import { Video } from "../domain/entities/video";
 import { VideoRepository } from "../domain/video.repository";
 
-export default class PopularVideosApp {
+export class PopularVideosApp {
   //Si bien puede verse muy redundante todo esto lo hago pensando en la consigna de
   //algo escalable
 
   private popularVideos: Video[] = [];
 
   constructor(private videoRepository: VideoRepository) {
-    this.updatePopularVideos();
+    //this.updatePopularVideos();
+    console.log("At video app");
   }
 
   async updatePopularVideos(): Promise<void> {
