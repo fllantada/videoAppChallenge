@@ -6,26 +6,61 @@ export class PopularVideosApp {
   //algo escalable
 
   private popularVideos: Video[] = [];
+  private notTodayPopularVideos: Video[] = [];
+  private todayPopularVideos: Video[] = [];
+  private today: Date;
+  private minPopularity: number = 0;
 
   constructor(private videoRepository: VideoRepository) {
+    this.today = new Date();
     this.updatePopularVideos();
-    console.log("At video app");
   }
 
   async updatePopularVideos(): Promise<void> {
-    try {
-      this.popularVideos = await this.videoRepository.getPopularVideos(20, 1); //traigo 6 y
-      //me quedo con los 5 mas populares si se cummple que tienen misma popularidad pido el siguiente
+    await this.getTodayPopular();
 
-      //sort by popularity
-      console.log("Videos populares");
-      console.log(this.popularVideos);
-    } catch (err) {
-      console.log(err);
+    await this.getAllTimePopular();
+
+    console.log("Today Popular Videos");
+    console.log(this.todayPopularVideos);
+    /*    console.log("Not Today Popular Videos");
+    console.log(this.notTodayPopularVideos);
+    console.log("Min Popularity");
+    console.log(this.minPopularity);
+    console.log("Today");
+    console.log(this.today); */
+
+    /*   this.popularVideos = mergeVideos();
+    sortByVideos(); */
+  }
+
+  private async getTodayPopular(): Promise<void> {
+    const videosToday = await this.videoRepository.getTodayPopularVideos(10);
+
+    if (videosToday.length) {
+      console.log(
+        videosToday.map((video: any) => {
+          return { ...video, popularity: video.popularity + 100 };
+        })
+      );
+      //
+      this.minPopularity =
+        videosToday[Math.min(videosToday.length - 1, 4)].popularity + 100;
     }
   }
 
-  /*  async getVideo(id: string): Promise<Video> {
+  private async getAllTimePopular(): Promise<void> {
+    this.notTodayPopularVideos = await this.videoRepository.getPopularVideos(
+      10,
+      this.minPopularity
+    );
+  }
+
+  getPopularVideos(): Video[] {
+    return this.popularVideos;
+  }
+
+  async getVideo(id: string): Promise<Video> {
     //first try local
     const video = this.popularVideos.find((video) => video._id === id);
     if (video) return video;
@@ -48,5 +83,8 @@ export class PopularVideosApp {
     );
     this.updatePopularVideos();
     return editedVideo;
-  } */
+  }
+  testMethod() {
+    console.log("testmethod called");
+  }
 }

@@ -1,21 +1,22 @@
 import { MongoRepository } from "../VideoApp/infrastructure/Mongo.repository";
 import { VideoRepository } from "../VideoApp/domain/video.repository";
-import { PopularVideosApp } from "../VideoApp/aplication/PopularVideosApp";
+import { PopularVideosApp } from "src/VideoApp/aplication/PopularVideosApp";
 import { Request, Response } from "express";
-import mongoConnection from "../services/mongoConextion";
+import videoApp from "../index";
 
-export class VideoController {
-  private repository: VideoRepository;
-  private app: PopularVideosApp;
+export default {
+  healthCheck: async (req: Request, res: Response) => {
+    console.log("GetVideos");
+    const videos = videoApp.testMethod();
 
-  constructor() {
-    this.repository = new MongoRepository();
-    this.app = new PopularVideosApp(this.repository);
-  }
+    res.json(videos);
+  },
 
-  async getVideos(req: Request, res: Response): Promise<void> {
-    console.log(this);
-    //await this.app.updatePopularVideos();
-    res.send("hola");
-  }
-}
+  getPopularVideos: async (req: Request, res: Response) => {
+    const videos = videoApp.getPopularVideos();
+
+    console.log("Videos from getPopularVideos Controller");
+    console.log(videos);
+    res.json(videos);
+  },
+};

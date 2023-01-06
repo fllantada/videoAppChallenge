@@ -25,7 +25,8 @@ export class MongoRepository implements VideoRepository {
     const videos = await this.model
       .find(queryFilter)
       .sort({ popularity: -1 })
-      .limit(limitQty);
+      .limit(limitQty)
+      .lean();
     return videos;
   }
 
@@ -40,8 +41,15 @@ export class MongoRepository implements VideoRepository {
     const videos = await this.model
       .find(queryFilter)
       .sort({ popularity: -1 })
-      .limit(limitQty);
+      .limit(limitQty)
+      .lean();
 
     return videos;
+  }
+  getVideo(id: string): Promise<Video> {
+    throw new Error("Method not implemented.");
+  }
+  editPopularity(id: string, newPopularity: number): Promise<Video> {
+    throw new Error("Method not implemented.");
   }
 }

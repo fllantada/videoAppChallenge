@@ -1,10 +1,8 @@
 import { Router } from "express";
-import { VideoController } from "../controllers/video.controller";
-
-const videoController = new VideoController();
+import videoController from "../controllers/video.controller";
 
 const videosRouter = Router();
 
-videosRouter.get("/", videoController.getVideos);
+videosRouter.get("/", videoController.getPopularVideos);
 
 export default videosRouter;
