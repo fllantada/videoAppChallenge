@@ -11,7 +11,6 @@ export class MongoRepository implements VideoRepository {
   }
 
   async getTodayPopularVideos(limitQty: number): Promise<Video[]> {
-    console.log("GetTodayPopularVideos");
     const today = new Date(); //today
     const beginingOfToday = new Date(
       today.getFullYear(),
@@ -19,14 +18,12 @@ export class MongoRepository implements VideoRepository {
       today.getDate()
     );
 
-    console.log(beginingOfToday);
-
-    const findFilter = {
+    const queryFilter = {
       created_date: { $gte: beginingOfToday },
     };
 
     const videos = await this.model
-      .find(findFilter)
+      .find(queryFilter)
       .sort({ popularity: -1 })
       .limit(limitQty);
     return videos;
@@ -36,14 +33,12 @@ export class MongoRepository implements VideoRepository {
     limitQty: number,
     minPopularity: number
   ): Promise<Video[]> {
-    const filter = {
+    const queryFilter = {
       popularity: { $gte: minPopularity },
     };
 
-    console.log(filter);
-
     const videos = await this.model
-      .find(filter)
+      .find(queryFilter)
       .sort({ popularity: -1 })
       .limit(limitQty);
 
