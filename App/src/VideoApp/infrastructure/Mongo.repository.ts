@@ -8,32 +8,24 @@ export class MongoRepository implements VideoRepository {
 
   constructor() {
     this.model = videoModel;
-    this.model.find({}).then((result) => console.log(result));
   }
 
-  editPopularity(id: string, newPopularity: number): Promise<Video> {
-    throw new Error("Method not implemented.");
-  }
-  addComment(videoId: string, text: string): Promise<Comment> {
-    throw new Error("Method not implemented.");
-  }
-  async getPopularVideos(qty: number): Promise<Video[]> {
-    const videos = await this.model.find({});
-
-    console.log(videos);
+  async getTodayPopularVideos(limitQty: number): Promise<Video[]> {
+    const videos = await this.model
+      .find({ date: { $gte: new Date(new Date().setHours(0, 0, 0, 0)) } })
+      .sort({ popularity: -1 })
+      .limit(limitQty);
     return videos;
   }
-  getVideo(id: string): Promise<Video> {
-    throw new Error("Method not implemented.");
-  }
-  addLike(id: string, popularity: number): Promise<Video> {
-    throw new Error("Method not implemented.");
-  }
-  getComments(videoId: string): Promise<Comment[]> {
-    throw new Error("Method not implemented.");
-  }
 
-  addComent(videoId: string, text: string): Promise<Comment> {
-    throw new Error("Method not implemented.");
+  async getPopularVideos(
+    limitQty: number,
+    minPopularity: number
+  ): Promise<Video[]> {
+    const videos = await this.model
+      .find({ popularity: { $gte: minPopularity } })
+      .sort({ popularity: -1 })
+      .limit(limitQty);
+    return videos;
   }
 }
