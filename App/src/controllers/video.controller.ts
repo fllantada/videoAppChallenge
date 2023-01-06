@@ -24,6 +24,17 @@ export default {
     }
   },
 
+  getVideoById: async (req: Request, res: Response) => {
+    const id = req.params.id;
+    try {
+      const video = await videoApp.getVideo(id);
+
+      res.status(200).json(video);
+    } catch (err) {
+      res.status(500).json({ error: err });
+    }
+  },
+
   eventHandler: async (req: Request, res: Response) => {
     // can be improved with DTO and validation with JOI
 
@@ -43,14 +54,15 @@ export default {
     }
 
     try {
+      let video;
       if (action === "addLike" || action === "removeLike") {
-        videoApp.likeEvent(videoId, action);
-        res.status(200).json("ok");
+        video = await videoApp.likeEvent(videoId, action);
+        res.status(200).json({ msg: "Event registered ok", videoNow: video });
       }
 
       if (action === "addComment" || action === "removeComment") {
-        videoApp.commentEvent(videoId, action);
-        res.status(200).json("ok");
+        video = await videoApp.commentEvent(videoId, action);
+        res.status(200).json({ msg: "Event registered ok", videoNow: video });
       }
     } catch (err) {
       res.status(500).json({ error: err });

@@ -20,7 +20,7 @@ export const checkAuthToken = async (
   next: NextFunction
 ) => {
   //get the token from the header if present
-  const token: string = req.headers["x-auth-token"] as string;
+  const token: string = req.headers["event-auth-token"] as string;
 
   if (!token) return res.status(401).json({ msg: "Unauthorized" });
 

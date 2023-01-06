@@ -123,7 +123,7 @@ export class PopularVideosApp {
     return this.popularVideos;
   }
 
-  private async getVideo(id: string): Promise<Video> {
+  public async getVideo(id: string): Promise<Video> {
     //first try local
     const video = this.popularVideos.find((video) => video._id === id);
     if (video) return video;
