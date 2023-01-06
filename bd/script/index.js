@@ -27,6 +27,7 @@ export async function connectMongo() {
 
 function createRandomVideos(n) {
   const videos = [];
+  const today = getTodayFormat();
   for (let i = 0; i < n; i++) {
     videos.push({
       title: faker.lorem.words(),
@@ -36,9 +37,19 @@ function createRandomVideos(n) {
       thumbnail_url: faker.image.imageUrl(),
       slug: faker.lorem.slug(),
       active: faker.random.numeric() % 3 !== 0,
-      created_date: faker.date.past(),
-      popularity: faker.random.numeric(),
+      created_date: faker.date.recent(10),
+      popularity: faker.random.numeric(4),
     });
   }
   return videos;
+}
+
+function getTodayFormat() {
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth() + 1; // months are zero-indexed
+  const day = currentDate.getDate();
+  const formattedDate = `${year}-${month}-${day}T00:00:00.000Z`;
+  console.log("formattedDate", formattedDate);
+  return formattedDate;
 }
