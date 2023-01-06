@@ -11,9 +11,10 @@ export class PopularVideosApp {
     this.updatePopularVideos();
   }
 
-  async updatePopularVideos(): Promise<void> {
+  private async updatePopularVideos(): Promise<void> {
+    this.popularVideos = [];
     //get todays popular vidos
-    const defaultQty = 10;
+    const defaultQty = 50;
     const todayVideos = await this.getTodayPopulars(defaultQty);
 
     //set min popularity
@@ -31,7 +32,9 @@ export class PopularVideosApp {
 
     const sortedVideos = this.sortVideos(allUniqueVideos);
 
-    console.log(sortedVideos);
+    this.popularVideos = sortedVideos.slice(0, 5);
+
+    console.log("popularVideos:", this.popularVideos);
 
     console.log(
       "All videos length",
@@ -116,11 +119,11 @@ export class PopularVideosApp {
     );
   }
 
-  getPopularVideos(): Video[] {
+  public getPopularVideos(): Video[] {
     return this.popularVideos;
   }
 
-  async getVideo(id: string): Promise<Video> {
+  private async getVideo(id: string): Promise<Video> {
     //first try local
     const video = this.popularVideos.find((video) => video._id === id);
     if (video) return video;
@@ -129,7 +132,10 @@ export class PopularVideosApp {
     return await this.videoRepository.getVideo(id);
   }
 
-  async editLike(id: string, action: "like" | "dislike"): Promise<Video> {
+  public async likeEvent(
+    id: string,
+    action: "like" | "dislike"
+  ): Promise<Video> {
     const video = await this.getVideo(id);
     let newPopularity = video.popularity;
 
@@ -141,7 +147,26 @@ export class PopularVideosApp {
       id,
       newPopularity
     );
+
     this.updatePopularVideos();
+
+    return editedVideo;
+  }
+
+  public async commentEvent(
+    id: string,
+    action: "add" | "remove"
+  ): Promise<Video> {
+    const video = await this.getVideo(id);
+    let newPopularity = video.popularity;
+    if (action === "add") newPopularity = video.popularity + 5;
+    if (action === "remove") newPopularity = video.popularity - 5;
+
+    const editedVideo = await this.videoRepository.editPopularity(
+      id,
+      newPopularity
+    );
+
     return editedVideo;
   }
 
