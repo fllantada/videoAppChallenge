@@ -25,6 +25,8 @@ export default {
   },
 
   eventHandler: async (req: Request, res: Response) => {
+    // can be improved with DTO and validation with JOI
+
     //protected route
     const videoId: string = req.body.videoId;
     const action = req.body.action;
