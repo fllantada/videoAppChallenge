@@ -44,7 +44,7 @@ export class PopularVideosApp {
 
     this.popularVideos = sortedVideos.slice(0, 5);
 
-    console.log("popularVideos:", this.popularVideos);
+    console.log("popularVideos:", this.popularVideos[0]);
 
     console.log(
       "All videos length",
@@ -134,14 +134,14 @@ export class PopularVideosApp {
 
   public async likeEvent(
     id: string,
-    action: "like" | "dislike"
+    action: "addLike" | "removeLike"
   ): Promise<Video> {
     const video = await this.getVideo(id);
     let newPopularity = video.popularity;
 
-    if (action === "dislike") newPopularity = video.popularity - 5;
+    if (action === "removeLike") newPopularity = video.popularity - 5;
 
-    if (action === "like") newPopularity = video.popularity + 10;
+    if (action === "addLike") newPopularity = video.popularity + 10;
 
     const editedVideo = await this.videoRepository.editPopularity(
       id,
@@ -163,12 +163,12 @@ export class PopularVideosApp {
 
   public async commentEvent(
     id: string,
-    action: "add" | "remove"
+    action: "addComment" | "removeComment"
   ): Promise<Video> {
     const video = await this.getVideo(id);
     let newPopularity = video.popularity;
-    if (action === "add") newPopularity = video.popularity + 5;
-    if (action === "remove") newPopularity = video.popularity - 5;
+    if (action === "addComment") newPopularity = video.popularity + 1;
+    if (action === "removeComment") newPopularity = video.popularity - 1;
 
     const editedVideo = await this.videoRepository.editPopularity(
       id,

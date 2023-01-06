@@ -13,6 +13,7 @@ export default {
   },
 
   getPopularVideos: async (req: Request, res: Response) => {
+    //public route
     try {
       const videos = videoApp.getPopularVideos();
       console.log("Videos from getPopularVideos Controller");
@@ -23,32 +24,32 @@ export default {
     }
   },
 
-  likeEvent: async (req: Request, res: Response) => {
+  eventHandler: async (req: Request, res: Response) => {
+    //protected route
     const videoId: string = req.body.videoId;
-    const likeAction = req.body.likeAction;
+    const action = req.body.action;
 
-    if (!videoId || (likeAction !== "like" && likeAction !== "dislike")) {
+    const validActions = [
+      "addLike",
+      "removeLike",
+      "addComment",
+      "removeComment",
+    ];
+
+    if (!videoId || !validActions.includes(action)) {
       return res.status(400).json({ error: "Missing or invalid parameters" });
     }
 
     try {
-      videoApp.likeEvent(videoId, likeAction);
-      res.status(200).json("ok");
-    } catch (err) {
-      res.status(500).json({ error: err });
-    }
-  },
-  commentEvent: async (req: Request, res: Response) => {
-    const videoId: string = req.body.videoId;
-    const commentAction = req.body.comment;
+      if (action === "addLike" || action === "removeLike") {
+        videoApp.likeEvent(videoId, action);
+        res.status(200).json("ok");
+      }
 
-    if (!videoId || (commentAction !== "add" && commentAction !== "remove")) {
-      return res.status(400).json({ error: "Missing or invalid parameters" });
-    }
-
-    try {
-      videoApp.commentEvent(videoId, commentAction);
-      res.status(200).json("ok");
+      if (action === "addComment" || action === "removeComment") {
+        videoApp.commentEvent(videoId, action);
+        res.status(200).json("ok");
+      }
     } catch (err) {
       res.status(500).json({ error: err });
     }

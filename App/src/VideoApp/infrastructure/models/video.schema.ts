@@ -5,7 +5,6 @@ import { Video as IVideo } from "src/VideoApp/domain/entities/video";
 
 // 2. Create a Schema corresponding to the document interface.
 const videoSchema = new Schema<IVideo>({
-  _id: String,
   title: String,
   author: String,
   views: Number,
