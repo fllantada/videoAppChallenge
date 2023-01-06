@@ -7,7 +7,8 @@
   "scripts": {
     "initialize": "./initialize.sh && node script/index.js",
     "start": "docker start db_videos_container",
-    "stop": "docker stop db_videos_container"
+    "stop": "docker stop db_videos_container",
+    "dev": "node script/index.js"
   },
   "author": "",
   "license": "ISC",

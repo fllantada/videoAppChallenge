@@ -32,14 +32,15 @@ function createRandomVideos(n) {
     videos.push({
       title: faker.lorem.words(),
       author: faker.internet.userName(),
-      views: faker.random.numeric(),
+      views: parseInt(faker.random.numeric()),
       youtube_id: faker.random.alpha(10),
       thumbnail_url: faker.image.imageUrl(),
       slug: faker.lorem.slug(),
       active: faker.random.numeric() % 3 !== 0,
       created_date: faker.date.recent(10),
-      popularity: faker.random.numeric(3),
+      popularity: parseInt(faker.random.numeric(3)),
     });
   }
+
   return videos;
 }
