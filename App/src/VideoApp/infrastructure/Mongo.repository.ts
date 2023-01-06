@@ -25,10 +25,6 @@ export class MongoRepository implements VideoRepository {
       created_date: { $gte: beginingOfToday },
     };
 
-    const viewsFilter = {
-      views: { $gte: 1 },
-    };
-
     const videos = await this.model
       .find(findFilter)
       .sort({ popularity: -1 })
@@ -40,12 +36,17 @@ export class MongoRepository implements VideoRepository {
     limitQty: number,
     minPopularity: number
   ): Promise<Video[]> {
+    const filter = {
+      popularity: { $gte: minPopularity },
+    };
+
+    console.log(filter);
+
     const videos = await this.model
-      .find({ popularity: { $gte: minPopularity } })
+      .find(filter)
       .sort({ popularity: -1 })
       .limit(limitQty);
 
-    console.log("videos desde  mongo repository", videos);
     return videos;
   }
 }

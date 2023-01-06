@@ -14,7 +14,7 @@ export class PopularVideosApp {
 
   async updatePopularVideos(): Promise<void> {
     try {
-      this.popularVideos = await this.videoRepository.getTodayPopularVideos(2); //traigo 6 y
+      this.popularVideos = await this.videoRepository.getPopularVideos(20, 1); //traigo 6 y
       //me quedo con los 5 mas populares si se cummple que tienen misma popularidad pido el siguiente
 
       //sort by popularity
