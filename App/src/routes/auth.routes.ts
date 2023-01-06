@@ -9,5 +9,6 @@ authRouter.post("/", (req, res, next) => {
 });
 
 authRouter.post("/login", authController.login);
+authRouter.post("/signup", authController.signup);
 
 export default authRouter;
