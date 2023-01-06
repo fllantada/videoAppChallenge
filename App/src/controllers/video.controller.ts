@@ -1,22 +1,56 @@
-import { MongoRepository } from "../VideoApp/infrastructure/Mongo.repository";
-import { VideoRepository } from "../VideoApp/domain/video.repository";
-import { PopularVideosApp } from "src/VideoApp/aplication/PopularVideosApp";
 import { Request, Response } from "express";
 import videoApp from "../index";
 
 export default {
   healthCheck: async (req: Request, res: Response) => {
     console.log("GetVideos");
-    const test = videoApp.testMethod();
-
-    res.json(test);
+    try {
+      const test = videoApp.testMethod();
+      res.status(200).json(test);
+    } catch (err) {
+      res.status(500).json({ error: err });
+    }
   },
 
   getPopularVideos: async (req: Request, res: Response) => {
-    const videos = videoApp.getPopularVideos();
+    try {
+      const videos = videoApp.getPopularVideos();
+      console.log("Videos from getPopularVideos Controller");
+      console.log(videos);
+      res.status(200).json(videos);
+    } catch (err) {
+      res.status(500).json({ error: err });
+    }
+  },
 
-    console.log("Videos from getPopularVideos Controller");
-    console.log(videos);
-    res.json(videos);
+  likeEvent: async (req: Request, res: Response) => {
+    const videoId: string = req.body.videoId;
+    const likeAction = req.body.likeAction;
+
+    if (!videoId || (likeAction !== "like" && likeAction !== "dislike")) {
+      return res.status(400).json({ error: "Missing or invalid parameters" });
+    }
+
+    try {
+      videoApp.likeEvent(videoId, likeAction);
+      res.status(200).json("ok");
+    } catch (err) {
+      res.status(500).json({ error: err });
+    }
+  },
+  commentEvent: async (req: Request, res: Response) => {
+    const videoId: string = req.body.videoId;
+    const commentAction = req.body.comment;
+
+    if (!videoId || (commentAction !== "add" && commentAction !== "remove")) {
+      return res.status(400).json({ error: "Missing or invalid parameters" });
+    }
+
+    try {
+      videoApp.commentEvent(videoId, commentAction);
+      res.status(200).json("ok");
+    } catch (err) {
+      res.status(500).json({ error: err });
+    }
   },
 };
