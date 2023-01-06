@@ -1,36 +1,46 @@
 import { Video } from "../domain/entities/video";
 import { VideoRepository } from "../domain/video.repository";
 
+const DEFAULT_QTY = 50;
+
 export class PopularVideosApp {
   //Si bien puede verse muy redundante todo esto lo hago pensando en la consigna de
   //algo escalable
 
   private popularVideos: Video[] = [];
+  private allVideos: Video[] = [];
 
   constructor(private videoRepository: VideoRepository) {
     this.updatePopularVideos();
   }
 
   private async updatePopularVideos(): Promise<void> {
+    //reset cache
     this.popularVideos = [];
-    //get todays popular vidos
-    const defaultQty = 50;
-    const todayVideos = await this.getTodayPopulars(defaultQty);
+    this.allVideos = [];
 
+    //get todays popular vidos
+    const todayVideos = await this.getTodayPopulars(DEFAULT_QTY);
     //set min popularity
     const minPopularity =
       todayVideos[Math.min(todayVideos.length - 1, 4)].popularity + 100;
 
     //get all time popular videos
     const allTimePopulars = await this.getAllTimePopular(
-      defaultQty,
+      DEFAULT_QTY,
       minPopularity
     );
+
+    //merge videos and remove duplicates
 
     const allVideos = this.mergeVideos(todayVideos, allTimePopulars);
     const allUniqueVideos = this.removeDuplicates(allVideos);
 
+    //sort videos with bonus popularity of same day
+
     const sortedVideos = this.sortVideos(allUniqueVideos);
+
+    this.allVideos = sortedVideos;
 
     this.popularVideos = sortedVideos.slice(0, 5);
 
@@ -78,16 +88,6 @@ export class PopularVideosApp {
       let aBonusPopularity = this.getDateBonusPopularity(videoA);
       let bBonusPopularity = this.getDateBonusPopularity(videoB);
 
-      console.log(
-        "A)",
-        videoA.created_date.toLocaleString() + "BONUS:",
-
-        aBonusPopularity,
-        "B)",
-        videoB.created_date.toLocaleString() + "BONUS:",
-        bBonusPopularity
-      );
-
       if (
         videoA.popularity + aBonusPopularity >
         videoB.popularity + bBonusPopularity
@@ -98,8 +98,8 @@ export class PopularVideosApp {
         videoB.popularity + bBonusPopularity
       )
         return 1;
-
-      return 0;
+      //randomize in case of same popularity
+      return Math.random() >= 0.5 ? -1 : 1;
     });
   }
 
@@ -148,9 +148,17 @@ export class PopularVideosApp {
       newPopularity
     );
 
-    this.updatePopularVideos();
+    this.checkUpdateNeeded(editedVideo);
 
     return editedVideo;
+  }
+
+  private checkUpdateNeeded(video: Video): void {
+    if (
+      video.popularity > this.allVideos[this.allVideos.length - 1].popularity
+    ) {
+      this.updatePopularVideos();
+    }
   }
 
   public async commentEvent(
@@ -166,6 +174,8 @@ export class PopularVideosApp {
       id,
       newPopularity
     );
+
+    this.checkUpdateNeeded(editedVideo);
 
     return editedVideo;
   }
