@@ -5,4 +5,8 @@ const videosRouter = Router();
 
 videosRouter.get("/", videoController.getPopularVideos);
 
+videosRouter.post("/like", videoController.likeEvent);
+
+videosRouter.post("/comment", videoController.commentEvent);
+
 export default videosRouter;
