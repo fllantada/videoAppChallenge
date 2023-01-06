@@ -14,16 +14,18 @@ export class PopularVideosApp {
 
   async updatePopularVideos(): Promise<void> {
     try {
-      this.popularVideos = await this.videoRepository.getPopularVideos(5); //traigo 6 y
+      this.popularVideos = await this.videoRepository.getTodayPopularVideos(2); //traigo 6 y
       //me quedo con los 5 mas populares si se cummple que tienen misma popularidad pido el siguiente
 
       //sort by popularity
+      console.log("Videos populares");
+      console.log(this.popularVideos);
     } catch (err) {
       console.log(err);
     }
   }
 
-  async getVideo(id: string): Promise<Video> {
+  /*  async getVideo(id: string): Promise<Video> {
     //first try local
     const video = this.popularVideos.find((video) => video._id === id);
     if (video) return video;
@@ -46,5 +48,5 @@ export class PopularVideosApp {
     );
     this.updatePopularVideos();
     return editedVideo;
-  }
+  } */
 }

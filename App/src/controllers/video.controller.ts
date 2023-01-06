@@ -9,16 +9,13 @@ export class VideoController {
   private app: PopularVideosApp;
 
   constructor() {
-    mongoConnection().then(() => this.initialize());
-
     this.repository = new MongoRepository();
-    // this.app = new PopularVideosApp(this.repository);
+    this.app = new PopularVideosApp(this.repository);
   }
 
   async getVideos(req: Request, res: Response): Promise<void> {
+    console.log(this);
+    //await this.app.updatePopularVideos();
     res.send("hola");
-  }
-  async initialize(): Promise<void> {
-    console.log("At controller Start initialize");
   }
 }
