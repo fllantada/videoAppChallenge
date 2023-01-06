@@ -7,9 +7,9 @@ import videoApp from "../index";
 export default {
   healthCheck: async (req: Request, res: Response) => {
     console.log("GetVideos");
-    const videos = videoApp.testMethod();
+    const test = videoApp.testMethod();
 
-    res.json(videos);
+    res.json(test);
   },
 
   getPopularVideos: async (req: Request, res: Response) => {

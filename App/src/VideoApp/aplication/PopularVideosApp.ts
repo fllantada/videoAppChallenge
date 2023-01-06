@@ -18,43 +18,40 @@ export class PopularVideosApp {
 
   async updatePopularVideos(): Promise<void> {
     await this.getTodayPopular();
-
     await this.getAllTimePopular();
-
-    console.log("Today Popular Videos");
-    console.log(this.todayPopularVideos);
-    /*    console.log("Not Today Popular Videos");
-    console.log(this.notTodayPopularVideos);
-    console.log("Min Popularity");
-    console.log(this.minPopularity);
-    console.log("Today");
-    console.log(this.today); */
-
-    /*   this.popularVideos = mergeVideos();
-    sortByVideos(); */
+    await this.mergeVideos();
+    await this.sortVideos();
   }
 
   private async getTodayPopular(): Promise<void> {
     const videosToday = await this.videoRepository.getTodayPopularVideos(10);
 
-    if (videosToday.length) {
-      console.log(
-        videosToday.map((video: any) => {
-          return { ...video, popularity: video.popularity + 100 };
-        })
-      );
-      //
-      this.minPopularity =
-        videosToday[Math.min(videosToday.length - 1, 4)].popularity + 100;
+    if (!videosToday.length) {
+      this.todayPopularVideos = [];
+      this.minPopularity = 0;
+      return;
     }
+    this.todayPopularVideos = videosToday.map((video: Video) => {
+      return { ...video, popularityAdjusted: video.popularity + 100 };
+    });
+    this.minPopularity =
+      videosToday[Math.min(videosToday.length - 1, 4)].popularity + 100;
   }
 
   private async getAllTimePopular(): Promise<void> {
-    this.notTodayPopularVideos = await this.videoRepository.getPopularVideos(
+    const videosAllTime = await this.videoRepository.getPopularVideos(
       10,
       this.minPopularity
     );
+
+    this.notTodayPopularVideos = videosAllTime.map((video: Video) => {
+      return { ...video, popularityAdjusted: video.popularity };
+    });
   }
+
+  private mergeVideos() {}
+
+  private sortVideos() {}
 
   getPopularVideos(): Video[] {
     return this.popularVideos;
@@ -84,7 +81,8 @@ export class PopularVideosApp {
     this.updatePopularVideos();
     return editedVideo;
   }
-  testMethod() {
-    console.log("testmethod called");
+
+  testMethod(): string {
+    return "Hola";
   }
 }
