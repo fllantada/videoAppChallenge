@@ -6,52 +6,115 @@ export class PopularVideosApp {
   //algo escalable
 
   private popularVideos: Video[] = [];
-  private notTodayPopularVideos: Video[] = [];
-  private todayPopularVideos: Video[] = [];
-  private today: Date;
-  private minPopularity: number = 0;
 
   constructor(private videoRepository: VideoRepository) {
-    this.today = new Date();
     this.updatePopularVideos();
   }
 
   async updatePopularVideos(): Promise<void> {
-    await this.getTodayPopular();
-    await this.getAllTimePopular();
-    await this.mergeVideos();
-    await this.sortVideos();
-  }
+    //get todays popular vidos
+    const defaultQty = 10;
+    const todayVideos = await this.getTodayPopulars(defaultQty);
 
-  private async getTodayPopular(): Promise<void> {
-    const videosToday = await this.videoRepository.getTodayPopularVideos(10);
+    //set min popularity
+    const minPopularity =
+      todayVideos[Math.min(todayVideos.length - 1, 4)].popularity + 100;
 
-    if (!videosToday.length) {
-      this.todayPopularVideos = [];
-      this.minPopularity = 0;
-      return;
-    }
-    this.todayPopularVideos = videosToday.map((video: Video) => {
-      return { ...video, popularityAdjusted: video.popularity + 100 };
-    });
-    this.minPopularity =
-      videosToday[Math.min(videosToday.length - 1, 4)].popularity + 100;
-  }
-
-  private async getAllTimePopular(): Promise<void> {
-    const videosAllTime = await this.videoRepository.getPopularVideos(
-      10,
-      this.minPopularity
+    //get all time popular videos
+    const allTimePopulars = await this.getAllTimePopular(
+      defaultQty,
+      minPopularity
     );
 
-    this.notTodayPopularVideos = videosAllTime.map((video: Video) => {
-      return { ...video, popularityAdjusted: video.popularity };
+    const allVideos = this.mergeVideos(todayVideos, allTimePopulars);
+    const allUniqueVideos = this.removeDuplicates(allVideos);
+
+    const sortedVideos = this.sortVideos(allUniqueVideos);
+
+    console.log(sortedVideos);
+
+    console.log(
+      "All videos length",
+      todayVideos.length,
+      allTimePopulars.length
+    );
+  }
+
+  private async getTodayPopulars(qty: number): Promise<Video[]> {
+    const videosToday = await this.videoRepository.getTodayPopularVideos(qty);
+
+    if (!videosToday.length) {
+      return [];
+    }
+
+    return videosToday;
+  }
+
+  private async getAllTimePopular(
+    qty: number,
+    minPop: number
+  ): Promise<Video[]> {
+    const videosAllTime = await this.videoRepository.getPopularVideos(
+      qty,
+      minPop
+    );
+
+    return videosAllTime;
+  }
+
+  private mergeVideos(todays: Video[], populars: Video[]): Video[] {
+    return [...todays, ...populars];
+  }
+
+  private removeDuplicates(arr: Video[]): Video[] {
+    return [...new Set(arr)];
+  }
+
+  private sortVideos(videos: Video[]): Video[] {
+    return videos.sort((videoA: Video, videoB: Video) => {
+      let aBonusPopularity = this.getDateBonusPopularity(videoA);
+      let bBonusPopularity = this.getDateBonusPopularity(videoB);
+
+      console.log(
+        "A)",
+        videoA.created_date.toLocaleString() + "BONUS:",
+
+        aBonusPopularity,
+        "B)",
+        videoB.created_date.toLocaleString() + "BONUS:",
+        bBonusPopularity
+      );
+
+      if (
+        videoA.popularity + aBonusPopularity >
+        videoB.popularity + bBonusPopularity
+      )
+        return -1;
+      if (
+        videoA.popularity + aBonusPopularity <
+        videoB.popularity + bBonusPopularity
+      )
+        return 1;
+
+      return 0;
     });
   }
 
-  private mergeVideos() {}
+  private getDateBonusPopularity(video: Video): number {
+    const today = new Date();
+    if (this.sameDay(video.created_date, today)) {
+      return 100;
+    }
+    return 0;
+  }
 
-  private sortVideos() {}
+  private sameDay(d1: Date, d2: Date): boolean {
+    return (
+      d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate()
+    );
+  }
 
   getPopularVideos(): Video[] {
     return this.popularVideos;
