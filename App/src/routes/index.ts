@@ -1,6 +1,6 @@
 import { Router } from "express";
-import viewsRouter from "./views.routes";
 import videoRouter from "./video.routes";
+import authRouter from "./auth.routes";
 
 import { Request, Response } from "express";
 
@@ -17,8 +17,15 @@ mainRouter.use("/api", (req: Request, res: Response, next) => {
   next();
 });
 
-mainRouter.use("/api", videoRouter);
-
 mainRouter.use("/api/videos", videoRouter);
+
+/* mainRouter.use("/api/auth", (req, res, next) => {
+
+  console.log("auth");
+  next();
+
+
+}); */
+mainRouter.use("/api/auth", authRouter);
 
 export default mainRouter;

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
-import { IUser, UserModel } from "src/Auth/models/user";
-import { generateAuthToken } from "src/Auth/services/jwt";
+import { IUser, UserModel } from "../Auth/models/user";
+import { generateAuthToken } from "../Auth/services/jwt";
 
 export default {
   healthCheck: async (req: Request, res: Response) => {

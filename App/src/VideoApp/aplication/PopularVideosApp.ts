@@ -120,7 +120,7 @@ export class PopularVideosApp {
   }
 
   public getPopularVideos(): Video[] {
-    return this.allVideos;
+    return this.popularVideos;
   }
 
   private async getVideo(id: string): Promise<Video> {
