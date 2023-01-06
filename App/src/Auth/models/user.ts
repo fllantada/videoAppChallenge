@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 export interface IUser {
   email: string;
   password: string;
+  isValidPassword: (password: string) => Promise<boolean>;
 }
 
 const UserSchema = new Schema<IUser>({
