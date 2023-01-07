@@ -1,21 +1,22 @@
-import { Container, Typography } from "@mui/material";
+import { Container } from "@mui/material";
+import { usePopularVideos } from "../hooks/usePopularVideos";
 
 export const PopularVideos: React.FC = () => {
+  const { videos, loading } = usePopularVideos();
+
+  console.log(videos);
+
   return (
     <Container
       maxWidth='lg'
       sx={{
         display: "flex",
-        marginTop: "1rem",
-        marginBottom: "2rem",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <Typography variant='h5' align='center' color='primary'>
-        VideoArea
-      </Typography>
+      {loading ? <h1>Loading...</h1> : videos[0].title}
     </Container>
   );
 };
