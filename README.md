@@ -60,3 +60,4 @@ Tienes 7 dias a partir de tener el acceso a este repositorio para ir agregando t
 # Tus notas para la ejecución...
 
 Leer el readme que prepare en la carpeta de BD
+Para el backend ejecutar el archivo initialize.sh que crea y corre un contenedor que conecta al contenedor de la base de datos. Ademas que ejecuta multistage para quedarse únicamente con el codigo de produccion.
