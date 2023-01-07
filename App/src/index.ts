@@ -2,6 +2,7 @@ import server from "./services/server";
 import mongoConnection from "./services/mongoConextion";
 import { PopularVideosApp } from "./VideoApp/aplication/PopularVideosApp";
 import { MongoRepository } from "./VideoApp/infrastructure/Mongo.repository";
+import config from "./config/config";
 
 const PORT = process.env.PORT || 8080;
 
@@ -12,6 +13,7 @@ mongoConnection();
 
 server.listen(PORT, () => {
   console.log(`Server is running on url http://localhost:${PORT}`);
+  console.log("URL Mongo:", config.mongoConfig);
 });
 
 //turn on videoApp

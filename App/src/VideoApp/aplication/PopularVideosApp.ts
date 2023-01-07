@@ -23,7 +23,7 @@ export class PopularVideosApp {
     const todayVideos = await this.getTodayPopulars(DEFAULT_QTY);
     //set min popularity
     const minPopularity =
-      todayVideos[Math.min(todayVideos.length - 1, 4)].popularity + 100;
+      todayVideos[Math.min(todayVideos.length - 1, 4)]?.popularity + 100 || 0;
 
     //get all time popular videos
     const allTimePopulars = await this.getAllTimePopular(
