@@ -1,5 +1,6 @@
-import { Container } from "@mui/material";
+import { Grid } from "@mui/material";
 import { usePopularVideos } from "../hooks/usePopularVideos";
+import { VideoCard } from "./VideoCard";
 
 export const PopularVideos: React.FC = () => {
   const { videos, loading } = usePopularVideos();
@@ -7,16 +8,16 @@ export const PopularVideos: React.FC = () => {
   console.log(videos);
 
   return (
-    <Container
-      maxWidth='lg'
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {loading ? <h1>Loading...</h1> : videos[0].title}
-    </Container>
+    <Grid container spacing={3} justifyContent='center'>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        videos.map((video, index) => (
+          <Grid item>
+            <VideoCard video={video} />
+          </Grid>
+        ))
+      )}
+    </Grid>
   );
 };

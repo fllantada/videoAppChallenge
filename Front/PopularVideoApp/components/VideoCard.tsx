@@ -1,13 +1,13 @@
 import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 import { Video } from "../domain/video.entity";
 
-export const VideoNav: React.FC<{ video: Video }> = ({ video }) => {
+export const VideoCard: React.FC<{ video: Video }> = ({ video }) => {
   console.log(video);
 
   return (
     <Card
       sx={{
-        maxWidth: 345,
+        width: 350,
       }}
     >
       <CardMedia
@@ -20,8 +20,8 @@ export const VideoNav: React.FC<{ video: Video }> = ({ video }) => {
         <Typography gutterBottom variant='h5' component='div'>
           {video.title}
         </Typography>
-        <Typography variant='body2' color='text.secondary'>
-          {video.popularity}
+        <Typography variant='body2' color='primary'>
+          Popularity: {video.popularity}
         </Typography>
       </CardContent>
     </Card>
