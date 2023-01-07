@@ -29,7 +29,7 @@ const viewsPath = path.resolve(__dirname, "../views");
 app.set("views", viewsPath);
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", config.frontOriginAccess);
   next();
 });
 app.use("/", mainRouter); //mainRouter va aca
