@@ -5,8 +5,6 @@ import { VideoCard } from "./VideoCard";
 export const PopularVideos: React.FC = () => {
   const { videos, loading } = usePopularVideos();
 
-  console.log(videos);
-
   return (
     <Grid container spacing={3} justifyContent='center'>
       {loading ? (

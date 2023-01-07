@@ -2,8 +2,6 @@ import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 import { Video } from "../domain/video.entity";
 
 export const VideoCard: React.FC<{ video: Video }> = ({ video }) => {
-  console.log(video);
-
   return (
     <Card
       sx={{
