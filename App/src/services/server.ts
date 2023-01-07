@@ -28,6 +28,10 @@ app.set("view engine", "pug");
 const viewsPath = path.resolve(__dirname, "../views");
 app.set("views", viewsPath);
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  next();
+});
 app.use("/", mainRouter); //mainRouter va aca
 
 app.use(function (err: Error, req: Request, res: Response, next: Function) {
