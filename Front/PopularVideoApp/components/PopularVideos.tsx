@@ -9,9 +9,9 @@ export const PopularVideos: React.FC = () => {
   const router = useRouter();
 
   const redirect = (video: Video) => {
-    history.replaceState({ video }, document.title, `/singleVideo`);
     router.push(`/${video._id}`);
   };
+  console.log("Desde PopularVideos.tsx", videos);
 
   return (
     <Grid container spacing={3} justifyContent='center'>

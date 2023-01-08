@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 import { getPopularVideos } from "../services/getPopularVideos";
 import { Video } from "../domain/video.entity";
+import { useVideos } from "../store/useVideos.store";
 
 export function usePopularVideos() {
-  const [videos, setVideos] = useState<Video[]>([]);
+  const [videos, setPopularVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [setStoreVideos] = useVideos((state) => [state.setStoreVideos]);
 
   useEffect(() => {
     async function fetchData() {
       const data = await getPopularVideos();
-      setVideos(data);
+      setPopularVideos(data);
       setLoading(false);
+      setStoreVideos(data);
     }
     fetchData();
   }, []);
