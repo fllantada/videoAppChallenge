@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { Title } from "../PopularVideoApp/components/Title";
 import { useRouter } from "next/router";
-import { Box } from "@mui/material";
+import { Container } from "@mui/material";
 import { VideoSingleCard } from "../PopularVideoApp/components/VideoSingleCard";
 import { useVideos } from "../PopularVideoApp/store/useVideos.store";
 import { Nav } from "../PopularVideoApp/components/Nav";
@@ -30,9 +30,16 @@ const Video: NextPage = () => {
     <>
       <Nav />
       <Title text={`${pageSelectedVideo.title}`} />
-      <Box justifyItems='center' alignItems={"center"}>
+      <Container
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <VideoSingleCard video={pageSelectedVideo} />
-      </Box>
+      </Container>
     </>
   );
 };

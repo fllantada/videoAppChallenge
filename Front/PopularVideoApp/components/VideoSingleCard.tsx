@@ -5,18 +5,23 @@ export const VideoSingleCard: React.FC<{ video: Video }> = ({ video }) => {
   return (
     <Card
       sx={{
-        width: 350,
+        width: 650,
       }}
     >
       <CardMedia
         component='img'
-        height='140'
+        height='300'
         image={video.thumbnail_url}
         alt={video.title}
       />
       <CardContent>
         <Typography gutterBottom variant='h5' component='div'>
           {video.title}
+        </Typography>
+        <Typography variant='subtitle1'>Author: {video.author}</Typography>
+        <Typography variant='subtitle1'>Views: {video.views}</Typography>
+        <Typography variant='subtitle1'>
+          Created: {video.created_date.slice(0, 10)}
         </Typography>
         <Typography variant='body2' color='primary'>
           Popularity: {video.popularity}

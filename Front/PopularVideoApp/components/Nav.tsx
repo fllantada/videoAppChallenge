@@ -1,8 +1,13 @@
 import { AppBar, Input, Button, Typography } from "@mui/material";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 export const Nav: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+  const register = () => {
+    router.push("/register");
+  };
 
   return (
     <AppBar
@@ -22,10 +27,10 @@ export const Nav: React.FC = () => {
       ) : (
         <>
           <Typography variant='h6' sx={{ margin: "0px 20px", color: "black" }}>
-            Ingrese email y contraseña para poder dar Like o comentar el video:
+            Logearse:
           </Typography>
           <Input
-            sx={{ minWidth: "400px", margin: "0px 20px" }}
+            sx={{ minWidth: "300px", margin: "0px 20px" }}
             placeholder='Email'
           />
           <Input
@@ -34,11 +39,18 @@ export const Nav: React.FC = () => {
             type='password'
           />
           <Button
-            sx={{ minWidth: "200px", margin: "0px 20px" }}
+            sx={{ minWidth: "150px", margin: "0px 20px" }}
             variant='contained'
             onClick={() => setIsLoggedIn(true)}
           >
             Iniciar sesión
+          </Button>
+          <Button
+            sx={{ minWidth: "150px", margin: "0px 20px" }}
+            variant='contained'
+            onClick={register}
+          >
+            Registrarse
           </Button>
         </>
       )}

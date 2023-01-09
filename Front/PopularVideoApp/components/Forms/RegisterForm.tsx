@@ -1,13 +1,16 @@
 import { Container, Button } from "@mui/material";
 import { useState } from "react";
 import { FormInput } from "./FormInput";
+import { useRouter } from "next/router";
 
 export const RegisterForm: React.FC<{ formTitle: string }> = ({
   formTitle,
 }) => {
   const [user, setUser] = useState({ email: "", password: "" });
+  const router = useRouter();
   const formControl = () => {
-    console.log(user);
+    setUser({ email: "", password: "" });
+    router.push("/");
   };
 
   const handleEmail = (e: string) => {

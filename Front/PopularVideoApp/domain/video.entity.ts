@@ -7,6 +7,6 @@ export interface Video {
   thumbnail_url: string;
   slug: string;
   active: boolean;
-  created_date: Date;
+  created_date: string;
   popularity: number;
 }

@@ -5,12 +5,12 @@ export const VideoCard: React.FC<{ video: Video }> = ({ video }) => {
   return (
     <Card
       sx={{
-        width: 350,
+        width: 650,
       }}
     >
       <CardMedia
         component='img'
-        height='140'
+        height='240'
         image={video.thumbnail_url}
         alt={video.title}
       />
