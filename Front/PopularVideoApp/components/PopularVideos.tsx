@@ -11,7 +11,6 @@ export const PopularVideos: React.FC = () => {
   const redirect = (video: Video) => {
     router.push(`/${video._id}`);
   };
-  console.log("Desde PopularVideos.tsx", videos);
 
   return (
     <Grid container spacing={3} justifyContent='center'>

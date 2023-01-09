@@ -10,7 +10,7 @@ interface User {
   setToken: (token: string) => void;
 }
 
-export const useAuthUserStore = create<User>((set) => ({
+export const useUserStore = create<User>((set) => ({
   email: "",
   authenticated: false,
   token: "",
