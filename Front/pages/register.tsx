@@ -1,6 +1,6 @@
 import { Container, TextField, Button, Typography, Box } from "@mui/material";
 import type { NextPage } from "next";
-import { RegisterForm } from "../PopularVideoApp/components/RegisterForm";
+import { RegisterForm } from "../PopularVideoApp/components/Forms/RegisterForm";
 import { Title } from "../PopularVideoApp/components/Title";
 const RegisterPage: NextPage = () => {
   return (
