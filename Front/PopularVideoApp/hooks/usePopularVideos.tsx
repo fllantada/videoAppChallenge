@@ -11,12 +11,15 @@ export function usePopularVideos() {
   useEffect(() => {
     async function fetchData() {
       const data = await getPopularVideos();
+      console.log("Estoy dentro de usePopularVideos.tsx");
       setPopularVideos(data);
       setLoading(false);
       setStoreVideos(data);
     }
     fetchData();
   }, []);
+
+  console.log(videos);
 
   return { videos, loading };
 }
