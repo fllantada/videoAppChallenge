@@ -111,7 +111,8 @@ export class PopularVideosApp {
     );
   }
 
-  public getPopularVideos(): Video[] {
+  public async getPopularVideos(): Promise<Video[]> {
+    this.popularVideos.length || (await this.updatePopularVideos());
     return this.popularVideos;
   }
 

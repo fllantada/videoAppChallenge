@@ -3,7 +3,6 @@ import videoApp from "../index";
 
 export default {
   healthCheck: async (req: Request, res: Response) => {
-    console.log("GetVideos");
     try {
       const test = videoApp.testMethod();
       res.status(200).json(test);
@@ -15,7 +14,7 @@ export default {
   getPopularVideos: async (req: Request, res: Response) => {
     //public route
     try {
-      const videos = videoApp.getPopularVideos();
+      const videos = await videoApp.getPopularVideos();
 
       res.status(200).json(videos);
     } catch (err) {
