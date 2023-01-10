@@ -59,5 +59,37 @@ Tienes 7 dias a partir de tener el acceso a este repositorio para ir agregando t
 
 # Tus notas para la ejecución...
 
-Leer el readme que prepare en la carpeta de BD
 Para el backend ejecutar el archivo initialize.sh que crea y corre un contenedor que conecta al contenedor de la base de datos. Ademas que ejecuta multistage para quedarse únicamente con el codigo de produccion.
+
+Se puede dar de alta todo ejecutando el .initialize_not_compose.sh (ejecuta script de cada parte individualmente) o ejecutando .initialize_with_compose.sh (ejecuta con el compose y ejecuta el script propio para llenar la base de datos)
+
+3 partes principales
+
+-App (Backend node-express) localhost:8080
+-Front (Next Js) localhost:3000
+-DB (mongo) :27017 mongo
+
+DB tiene su propio readme donde explica como funciona el seed de datos
+
+Front es una aplicacion que permite ver los videos, logearse / deslogares / registrarse ver un video.
+
+# Enfoque al ejercicio
+
+El ejercicio pedia tener en cuenta para mostrar los mas populares tanto comentarios como likes.
+
+Dado que estos dos campos no forman parte de la estructura de Video con la que se pedia trabajar se implemento una escucha de eventos.
+
+Se interpreto que tanto Comentarios como Likes formaban parte de otra entidad y que opera de forma independiente a los videos.
+
+La Clase que administra esta feature y muestra los videos mas populares entonces habilita una ruta evento que debe ser llamada cuando se ejecuta una de las siguientes acciones.
+"addLike"
+"removeLike"
+"addComment"
+"removeComment"
+
+de esta manera puede la aplicacion considerar las reglas de entrega asociados a Likes y comentarios.
+
+Para la logica de la aplicacion se utilizo arquitectura guiada por dominio definiendo
+
+dominio de la entidad video
+repositorio de la entidad video para la aplicacion PopularVideosApp que es instanciada con un videoRepository para este caso implementado con Mongo.
