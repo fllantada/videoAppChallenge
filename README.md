@@ -61,6 +61,8 @@ Tienes 7 dias a partir de tener el acceso a este repositorio para ir agregando t
 
 Se puede dar de alta todo ejecutando el ./initialize_not_compose.sh (ejecuta script de cada parte individualmente) o ejecutando ./initialize_with_compose.sh (ejecuta con el compose y ejecuta el script propio para llenar la base de datos)
 
+En general cada parte tiene sus scripts que fueron utilizados durante el desarrollo. Se dejaron para dar la posibilidad de ejecutar los contenedores de forma independiente.
+
 3 partes principales
 
 -App (Backend node-express) localhost:8080
@@ -69,7 +71,7 @@ Se puede dar de alta todo ejecutando el ./initialize_not_compose.sh (ejecuta scr
 
 DB tiene su propio readme donde explica como funciona el seed de datos
 
-Front es una aplicacion que permite ver los videos, logearse / deslogares / registrarse ver un video.
+Front es una aplicacion que permite ver los videos, logearse / deslogares / registrarse ver un video. Agregar Likes, y comentarios para verificar correcto funcionamiento de la consigna.
 
 # Enfoque al ejercicio
 
@@ -88,4 +90,4 @@ Nuestra aplicacion escucha una ruta de evento que debe ser llamada cuando se eje
 de esta manera la aplicacion aplicar las reglas de entrega asociados a Likes y comentarios modificando la popularidad. Estoy ocurren en runtime entonces hace sentido hacerlo orientado a eventos.
 
 Para la logica de la aplicacion se utilizo arquitectura guiada por dominio definiendo
-carpetas dominio, aplicacion,infraestructura en capas.
+carpetas dominio, aplicacion,infraestructura en capas desacopladas a cualquier implementacion de infraestructura inyectando las dependencias definidas por el dominio.
