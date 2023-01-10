@@ -1,7 +1,10 @@
 import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 import { Video } from "../domain/video.entity";
+import { LikeFooter } from "./LikeFooter";
+import { useUserStore } from "../store/userAuthUser.store";
 
 export const VideoSingleCard: React.FC<{ video: Video }> = ({ video }) => {
+  const [authenticated] = useUserStore((state) => [state.authenticated]);
   return (
     <Card
       sx={{
@@ -16,7 +19,7 @@ export const VideoSingleCard: React.FC<{ video: Video }> = ({ video }) => {
       />
       <CardContent>
         <Typography gutterBottom variant='h5' component='div'>
-          {video.title}
+          Title: {video.title}
         </Typography>
         <Typography variant='subtitle1'>Author: {video.author}</Typography>
         <Typography variant='subtitle1'>Views: {video.views}</Typography>
@@ -26,6 +29,7 @@ export const VideoSingleCard: React.FC<{ video: Video }> = ({ video }) => {
         <Typography variant='body2' color='primary'>
           Popularity: {video.popularity}
         </Typography>
+        {authenticated && <LikeFooter videoId={video._id} />}
       </CardContent>
     </Card>
   );

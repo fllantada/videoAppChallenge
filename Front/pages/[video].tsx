@@ -5,6 +5,8 @@ import { Container } from "@mui/material";
 import { VideoSingleCard } from "../PopularVideoApp/components/VideoSingleCard";
 import { useVideos } from "../PopularVideoApp/store/useVideos.store";
 import { Nav } from "../PopularVideoApp/components/Nav";
+import { CommentHolder } from "../PopularVideoApp/components/CommentHolder";
+import { useUserStore } from "../PopularVideoApp/store/userAuthUser.store";
 
 /* import { useUser } from "../PopularVideoApp/store/userAuthUser.store"; */
 
@@ -12,6 +14,7 @@ const Video: NextPage = () => {
   const router = useRouter();
   const id = router.query.video;
   const [videos] = useVideos((state) => [state.videos]);
+  const [authenticated] = useUserStore((state) => [state.authenticated]);
 
   /*   const [user, setAuthenticated] = useUser((state) => [
     state.user,
@@ -37,6 +40,7 @@ const Video: NextPage = () => {
         }}
       >
         <VideoSingleCard video={pageSelectedVideo} />
+        {authenticated && <CommentHolder videoId={pageSelectedVideo._id} />}
       </Container>
     </>
   );
