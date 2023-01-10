@@ -19,7 +19,10 @@ const config = {
     url: process.env.MONGO_URL || "mongodb://localhost:27017/videoApp",
   },
   TOKEN_SECRET_KEY: process.env.TOKEN_SECRET_KEY || "mysecret",
-  frontOriginAccess: process.env.FRONT_ORIGIN_ACCESS || "http://localhost:3000",
+  corsOptions: {
+    origin: process.env.FRONT_ORIGIN_ACCESS || "http://localhost:3000",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  },
 };
 
 export default config;
