@@ -43,14 +43,6 @@ export class PopularVideosApp {
     this.allVideos = sortedVideos;
 
     this.popularVideos = sortedVideos.slice(0, 5);
-
-    console.log("popularVideos:", this.popularVideos[0]);
-
-    console.log(
-      "All videos length",
-      todayVideos.length,
-      allTimePopulars.length
-    );
   }
 
   private async getTodayPopulars(qty: number): Promise<Video[]> {

@@ -13,7 +13,6 @@ mongoConnection();
 
 server.listen(PORT, () => {
   console.log(`Server is running on url http://localhost:${PORT}`);
-  console.log("URL Mongo:", config.mongoConfig);
 });
 
 //turn on videoApp

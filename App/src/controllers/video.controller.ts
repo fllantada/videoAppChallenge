@@ -16,8 +16,7 @@ export default {
     //public route
     try {
       const videos = videoApp.getPopularVideos();
-      console.log("Videos from getPopularVideos Controller");
-      console.log(videos);
+
       res.status(200).json(videos);
     } catch (err) {
       res.status(500).json({ error: err });

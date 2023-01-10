@@ -28,8 +28,6 @@ export const checkAuthToken = async (
     const decode = jwt.verify(token, config.TOKEN_SECRET_KEY) as {
       email: string;
     };
-    console.log("TOKEN DECODIFICADO");
-    console.log(decode);
 
     const user = await UserModel.find({ email: decode.email });
 

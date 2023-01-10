@@ -16,7 +16,6 @@ export async function connectMongo() {
   const url = "mongodb://localhost:27017";
   try {
     const client = await MongoClient.connect(url, { useNewUrlParser: true });
-    console.log("Connected to MongoDB");
 
     const db = client.db("videoApp");
     return db;

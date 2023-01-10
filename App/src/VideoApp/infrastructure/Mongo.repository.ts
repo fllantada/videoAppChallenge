@@ -48,15 +48,12 @@ export class MongoRepository implements VideoRepository {
     return videos;
   }
   async getVideo(id: string): Promise<Video> {
-    console.log("id del video es:", id);
-
     const video = await this.model.findById(id).lean();
 
     if (!video) throw new Error("Video not found");
     return video;
   }
   async editPopularity(id: string, newPopularity: number): Promise<Video> {
-    console.log(id, newPopularity);
     const video = await this.model
       .findByIdAndUpdate(id, { popularity: newPopularity }, { new: true })
       .lean();
