@@ -24,8 +24,6 @@ const Video: NextPage = () => {
 
   if (!pageSelectedVideo) return <p>Video not found</p>;
 
-  console.log("desde [videos] videos es:", videos, "y id es:", id);
-
   return (
     <>
       <Nav />

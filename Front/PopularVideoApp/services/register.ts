@@ -1,15 +1,10 @@
-import { useUserStore } from "../store/userAuthUser.store";
 import axios from "axios";
-export default async function register(email: string, password: string) {
-  const response = await axios.post(`http://localhost:8080/auth/register`, {
-    email,
-    password,
-  });
 
-  const [setToken, setAuthenticated] = useUserStore((state) => [
-    state.setToken,
-    state.setAuthenticated,
-  ]);
+export default async function register(email: string, password: string) {
+  const response = await axios.post(`http://localhost:8080/api/auth/signup`, {
+    email: email,
+    password: password,
+  });
 
   if (response.status !== 200) {
     throw new Error("Error al Logearse");
@@ -21,7 +16,7 @@ export default async function register(email: string, password: string) {
 
   const token: string = response.data?.token;
   if (token) {
-    setToken(response.data.token);
-    setAuthenticated(true);
+    return token;
   }
+  return null;
 }

@@ -3,8 +3,9 @@ export const FormInput: React.FC<{
   nombre: string;
   tipo: "email" | "text" | "password";
   placeholder?: string;
+  value: string;
   cb: (e: any) => void;
-}> = ({ nombre, tipo, placeholder, cb }) => {
+}> = ({ nombre, tipo, placeholder, cb, value }) => {
   return (
     <Box
       sx={{
@@ -22,7 +23,9 @@ export const FormInput: React.FC<{
         {nombre}
       </Typography>
       <TextField
-        onChange={(e) => cb(e.target.value)}
+        onChange={cb}
+        value={value}
+        name={nombre}
         sx={{
           minWidth: "400px",
           margin: "0px 20px",

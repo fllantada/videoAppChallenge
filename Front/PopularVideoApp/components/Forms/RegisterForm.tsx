@@ -2,24 +2,35 @@ import { Container, Button } from "@mui/material";
 import { useState } from "react";
 import { FormInput } from "./FormInput";
 import { useRouter } from "next/router";
+import register from "../../services/register";
+import { useUserStore } from "../../store/userAuthUser.store";
 
 export const RegisterForm: React.FC<{ formTitle: string }> = ({
   formTitle,
 }) => {
-  const [user, setUser] = useState({ email: "", password: "" });
   const router = useRouter();
-  const formControl = () => {
-    setUser({ email: "", password: "" });
-    router.push("/");
+  const [user, setUser] = useState({ email: "", password: "" });
+  const [setToken, setAuthenticated] = useUserStore((state) => [
+    state.setToken,
+    state.setAuthenticated,
+  ]);
+
+  const formControl = async () => {
+    try {
+      const token = await register(user.email, user.password);
+
+      token && setToken(token);
+      setAuthenticated(true);
+      setUser({ email: "", password: "" });
+
+      router.push("/");
+    } catch (e) {
+      alert("Error al registrarse");
+    }
   };
 
-  const handleEmail = (e: string) => {
-    //logica validacion email
-    setUser({ ...user, email: e });
-  };
-  const handlePassword = (e: string) => {
-    //logica validacion contraseña
-    setUser({ ...user, password: e });
+  const handleInputs = (e: any) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   return (
@@ -35,14 +46,16 @@ export const RegisterForm: React.FC<{ formTitle: string }> = ({
       <h1>{formTitle}</h1>
 
       <FormInput
-        cb={handleEmail}
-        nombre='Email'
+        cb={handleInputs}
+        nombre='email'
+        value={user.email}
         tipo='email'
         placeholder='email'
       />
       <FormInput
-        cb={handlePassword}
-        nombre='Contraseña'
+        cb={handleInputs}
+        value={user.password}
+        nombre='password'
         tipo='password'
         placeholder='contraseña'
       />

@@ -12,6 +12,4 @@ export default async function postEvent(videoId: string, action: validAction) {
     videoId: videoId,
     action: action,
   });
-
-  console.log(response);
 }
