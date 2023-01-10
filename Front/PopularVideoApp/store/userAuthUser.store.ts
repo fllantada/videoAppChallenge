@@ -8,6 +8,7 @@ interface User {
   //actions
   setAuthenticated: (authenticated: boolean) => void;
   setToken: (token: string) => void;
+  logOut: () => void;
 }
 
 export const useUserStore = create<User>((set) => ({
@@ -21,4 +22,7 @@ export const useUserStore = create<User>((set) => ({
     set((state) => ({ ...state, email: userEmail })),
   setAuthenticated: (authenticated) =>
     set((state) => ({ ...state, authenticated })),
+
+  logOut: () =>
+    set((state) => ({ ...state, authenticated: false, token: "", email: "" })),
 }));

@@ -1,12 +1,34 @@
 import { AppBar, Input, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { useUserStore } from "../store/userAuthUser.store";
+import { logIn } from "../services/login";
 
 export const Nav: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authenticated, logOut, setToken, setAuthenticated] = useUserStore(
+    (state) => [
+      state.authenticated,
+      state.logOut,
+      state.setToken,
+      state.setAuthenticated,
+    ]
+  );
+  const [user, setUser] = useState({ email: "", password: "" });
+
   const router = useRouter();
-  const register = () => {
-    router.push("/register");
+
+  const handleInputs = (e: any) =>
+    setUser({ ...user, [e.target.name]: e.target.value });
+
+  const login = async () => {
+    try {
+      const token = await logIn(user.email, user.password);
+      setUser({ email: "", password: "" });
+      setToken(token);
+      setAuthenticated(true);
+    } catch (e) {
+      alert("Usuario o contraseña incorrectos");
+    }
   };
 
   return (
@@ -20,8 +42,8 @@ export const Nav: React.FC = () => {
         justifyContent: "right",
       }}
     >
-      {isLoggedIn ? (
-        <Button variant='contained' onClick={() => setIsLoggedIn(false)}>
+      {authenticated ? (
+        <Button variant='contained' onClick={logOut}>
           Cerrar sesión
         </Button>
       ) : (
@@ -30,10 +52,16 @@ export const Nav: React.FC = () => {
             Logearse:
           </Typography>
           <Input
+            name='email'
+            onChange={handleInputs}
+            value={user.email}
             sx={{ minWidth: "300px", margin: "0px 20px" }}
             placeholder='Email'
           />
           <Input
+            name='password'
+            onChange={handleInputs}
+            value={user.password}
             sx={{ minWidth: "200px", margin: "0px 20px" }}
             placeholder='Contraseña'
             type='password'
@@ -41,14 +69,14 @@ export const Nav: React.FC = () => {
           <Button
             sx={{ minWidth: "150px", margin: "0px 20px" }}
             variant='contained'
-            onClick={() => setIsLoggedIn(true)}
+            onClick={login}
           >
             Iniciar sesión
           </Button>
           <Button
             sx={{ minWidth: "150px", margin: "0px 20px" }}
             variant='contained'
-            onClick={register}
+            onClick={() => router.push("/register")}
           >
             Registrarse
           </Button>

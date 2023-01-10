@@ -2,15 +2,13 @@ import axios from "axios";
 import { useUserStore } from "../store/userAuthUser.store";
 
 export async function logIn(email: string, password: string) {
+  console.log("Ingrese a login con", email, password);
   const response = await axios.post(`http://localhost:8080/api/auth/login`, {
-    email,
-    password,
+    email: email,
+    password: password,
   });
 
-  const [setToken, setAuthenticated] = useUserStore((state) => [
-    state.setToken,
-    state.setAuthenticated,
-  ]);
+  console.log(response);
 
   if (response.status !== 200) {
     throw new Error("Error al Logearse");
@@ -22,7 +20,8 @@ export async function logIn(email: string, password: string) {
 
   const token: string = response.data?.token;
   if (token) {
-    setToken(response.data.token);
-    setAuthenticated(true);
+    return token;
+  } else {
+    throw new Error("Error al obtener permisos");
   }
 }
