@@ -9,11 +9,17 @@ import passport from "passport";
 import cors from "cors";
 
 const app: Express = express();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//sessionConfig
+//sessionConfig standard
+
+app.use(session(config.sessionConfig));
 
 //passport config
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 //user Status for protected Routes
 
@@ -22,17 +28,13 @@ app.use(express.urlencoded({ extended: true }));
 const publicPath = path.resolve(__dirname, "../public");
 app.use(express.static(publicPath));
 
-// engine
-
-app.set("view engine", "pug");
-
-const viewsPath = path.resolve(__dirname, "../views");
-app.set("views", viewsPath);
-
+//security cors policy
 app.use(cors(config.corsOptions));
 
+//routes
 app.use("/", mainRouter); //mainRouter va aca
 
+// Error handler
 app.use(function (err: Error, req: Request, res: Response, next: Function) {
   res.status(500).send({ msg: "Se te rompio todo mira ->", err: err.message });
 });
