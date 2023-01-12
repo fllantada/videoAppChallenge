@@ -1,4 +1,4 @@
-import { Schema, model, connect } from "mongoose";
+import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 
 // this IUSER must be imported from a Shared Domain of the APPLICATION (not the infrastructure)

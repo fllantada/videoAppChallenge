@@ -1,12 +1,13 @@
 import { Router } from "express";
-import { checkAuthToken } from "../Auth/services/jwt";
+import { protectedRoutes } from "../Auth/middlewares/protected";
+
 import videoController from "../controllers/video.controller";
 
 const videosRouter = Router();
 
 videosRouter.get("/", videoController.getPopularVideos);
 
-videosRouter.post("/event", checkAuthToken, videoController.eventHandler);
+videosRouter.post("/event", protectedRoutes, videoController.eventHandler);
 
 videosRouter.get("/:id", videoController.getVideoById);
 
