@@ -21,6 +21,16 @@ app.use(session(config.sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 
+passport.serializeUser(function (user, done) {
+  console.log("serializeUser  aaaaa", user);
+  done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+  console.log("deserializeUser    aaaaaaaaaaa", user);
+  user ? done(null, user) : done(null, false);
+});
+
 //user Status for protected Routes
 
 // Static files
